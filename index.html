@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impara gli Scacchi - Lezioni per Bambini</title>
+    
+     <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/LuckyLuke63/Lezioni-di-scacchi/main/scacchiera.jpg">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background: #f8f9fa;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 15px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        .nav-btn.level-1 { background: #4ade80; color: white; }
+        .nav-btn.level-2 { background: #fbbf24; color: white; }
+        .nav-btn.level-3 { background: #f97316; color: white; }
+        .nav-btn.level-4 { background: #ef4444; color: white; }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .lesson {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .lesson.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .lesson h2 {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .lesson h3 {
+            color: #555;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .piece-card {
+            background: #f0f9ff;
+            border: 3px solid #3b82f6;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+
+        .piece-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .piece-icon {
+            font-size: 3em;
+        }
+
+        .piece-info h4 {
+            font-size: 1.4em;
+            color: #1e40af;
+        }
+
+        .piece-info p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .board-example {
+            background: #e5e7eb;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .mini-board {
+            display: inline-grid;
+            grid-template-columns: repeat(8, 40px);
+            gap: 0;
+            border: 3px solid #333;
+            margin: 15px 0;
+        }
+
+        .square {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .square.light { background: #f0d9b5; }
+        .square.dark { background: #b58863; }
+
+        .tip-box {
+            background: #fef3c7;
+            border-left: 5px solid #f59e0b;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .tip-box strong {
+            color: #d97706;
+            font-size: 1.2em;
+        }
+
+        .exercise-box {
+            background: #dbeafe;
+            border: 3px dashed #3b82f6;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .exercise-box h4 {
+            color: #1e40af;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            line-height: 1.8;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 1.1em;
+        }
+
+        .chess-pieces {
+            font-size: 3em;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        p {
+            line-height: 1.8;
+            font-size: 1.1em;
+            color: #333;
+            margin: 15px 0;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .level-card {
+            padding: 25px;
+            border-radius: 15px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .level-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .level-card h3 {
+            color: white;
+            border: none;
+            padding: 0;
+            margin: 0 0 15px 0;
+        }
+
+        .level-card ul {
+            margin-left: 20px;
+        }
+
+        .level-card li {
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>♔ Impara gli Scacchi! ♕</h1>
+            <div class="subtitle">Diventa un campione con lezioni divertenti</div>
+        </header>
+
+        <div class="nav-buttons">
+            <button class="nav-btn level-1" onclick="showLesson('home')">🏠 Home</button>
+            <button class="nav-btn level-1" onclick="showLesson('lesson1')">Lezione 1</button>
+            <button class="nav-btn level-2" onclick="showLesson('lesson2')">Lezione 2</button>
+            <button class="nav-btn level-2" onclick="showLesson('lesson3')">Lezione 3</button>
+            <button class="nav-btn level-3" onclick="showLesson('lesson4')">Lezione 4</button>
+            <button class="nav-btn level-4" onclick="showLesson('lesson5')">Lezione 5</button>
+        </div>
+
+        <div class="content">
+            <div id="home" class="lesson active">
+                <div class="lesson-header">
+                    <h2>Benvenuto nel Mondo degli Scacchi!</h2>
+                    <p>Gli scacchi sono un gioco fantastico che ti aiuta a pensare, pianificare e divertirti!</p>
+                </div>
+
+                <div class="chess-pieces">
+                    ♔ ♕ ♖ ♗ ♘ ♙
+                </div>
+
+                <h3>📚 Percorso di Apprendimento</h3>
+                
+                <div class="home-grid">
+                    <div class="level-card" style="background: linear-gradient(135deg, #4ade80, #22c55e);" onclick="showLesson('lesson1')">
+                        <h3>🌟 Livello Principiante</h3>
+                        <ul>
+                            <li>La scacchiera</li>
+                            <li>I pezzi degli scacchi</li>
+                            <li>Come muovere i pezzi</li>
+                        </ul>
+                    </div>
+
+                    <div class="level-card" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);" onclick="showLesson('lesson3')">
+                        <h3>⭐ Livello Base</h3>
+                        <ul>
+                            <li>Regole speciali</li>
+                            <li>Come iniziare la partita</li>
+                            <li>Primi trucchi</li>
+                        </ul>
+                    </div>
+
+                    <div class="level-card" style="background: linear-gradient(135deg, #f97316, #ea580c);" onclick="showLesson('lesson4')">
+                        <h3>🏆 Livello Intermedio</h3>
+                        <ul>
+                            <li>Tattiche di base</li>
+                            <li>Attaccare e difendere</li>
+                            <li>Strategie vincenti</li>
+                        </ul>
+                    </div>
+
+                    <div class="level-card" style="background: linear-gradient(135deg, #ef4444, #dc2626);" onclick="showLesson('lesson5')">
+                        <h3>👑 Livello Avanzato</h3>
+                        <ul>
+                            <li>Scacco matto!</li>
+                            <li>Finali di partita</li>
+                            <li>Diventa un campione</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="lesson1" class="lesson">
+                <div class="lesson-header">
+                    <h2>Lezione 1: La Scacchiera e i Pezzi</h2>
+                    <p>Iniziamo il nostro viaggio nel mondo degli scacchi!</p>
+                </div>
+
+                <h3>🎯 La Scacchiera</h3>
+                <p>La scacchiera è come una grande griglia fatta di 64 caselle (quadratini). È divisa in 8 righe e 8 colonne. Le caselle sono di due colori: chiare e scure, alternate come una scacchiera!</p>
+
+                <div class="tip-box">
+                    <strong>💡 Trucco Importante:</strong> Quando posizioni la scacchiera, assicurati che l'angolo in basso a destra sia una casella chiara. Ricorda: "Bianco a destra!"
+                </div>
+
+                <div class="board-example">
+                    <p><strong>Ecco come appare parte della scacchiera:</strong></p>
+                    <div class="mini-board">
+                        <div class="square light"></div>
+                        <div class="square dark"></div>
+                        <div class="square light"></div>
+                        <div class="square dark"></div>
+                        <div class="square light"></div>
+                        <div class="square dark"></div>
+                        <div class="square light"></div>
+                        <div class="square dark"></div>
+                        <div class="square dark"></div>
+                        <div class="square light"></div>
+                        <div class="square dark"></div>
+                        <div class="square light"></div>
+                        <div class="square dark"></div>
+                        <div class="square light"></div>
+                        <div class="square dark"></div>
+                        <div class="square light"></div>
+                    </div>
+                </div>
+
+                <h3>♟️ I Pezzi degli Scacchi</h3>
+                <p>Ogni giocatore ha 16 pezzi: 8 pedoni e 8 pezzi speciali. Vediamo quali sono!</p>
+
+                <div class="piece-card">
+                    <div class="piece-header">
+                        <div class="piece-icon">♔</div>
+                        <div class="piece-info">
+                            <h4>Il Re</h4>
+                            <p>Il pezzo più importante! Hai solo 1 Re.</p>
+                        </div>
+                    </div>
+                    <p>Il Re è il boss della squadra. Se perdi il Re, perdi la partita! Devi proteggerlo sempre.</p>
+                </div>
+
+                <div class="piece-card">
+                    <div class="piece-header">
+                        <div class="piece-icon">♕</div>
+                        <div class="piece-info">
+                            <h4>La Regina</h4>
+                            <p>Il pezzo più potente! Hai solo 1 Regina.</p>
+                        </div>
+                    </div>
+                    <p>La Regina è fortissima e può muoversi in tanti modi diversi. È il tuo pezzo migliore!</p>
+                </div>
+
+                <div class="piece-card">
+                    <div class="piece-header">
+                        <div class="piece-icon">♖</div>
+                        <div class="piece-info">
+                            <h4>Le Torri</h4>
+                            <p>Pezzi forti che sembrano castelli. Hai 2 Torri.</p>
+                        </div>
+                    </div>
+                    <p>Le Torri sono come carri armati che vanno dritti in avanti, indietro e ai lati.</p>
+                </div>
+
+                <div class="piece-card">
+                    <div class="piece-header">
+                        <div class="piece-icon">♗</div>
+                        <div class="piece-info">
+                            <h4>Gli Alfieri</h4>
+                            <p>Pezzi veloci in diagonale. Hai 2 Alfieri.</p>
+                        </div>
+                    </div>
+                    <p>Gli Alfieri si muovono solo in diagonale, ma possono andare molto lontano!</p>
+                </div>
+
+                <div class="piece-card">
+                    <div class="piece-header">
+                        <div class="piece-icon">♘</div>
+                        <div class="piece-info">
+                            <h4>I Cavalli</h4>
+                            <p>Pezzi speciali che saltano! Hai 2 Cavalli.</p>
+                        </div>
+                    </div>
+                    <p>I Cavalli sono gli unici pezzi che possono saltare sopra gli altri. Fanno una mossa a forma di "L".</p>
+                </div>
+
+                <div class="piece-card">
+                    <div class="piece-header">
+                        <div class="piece-icon">♙</div>
+                        <div class="piece-info">
+                            <h4>I Pedoni</h4>
+                            <p>I piccoli soldati. Hai 8 Pedoni.</p>
+                        </div>
+                    </div>
+                    <p>I Pedoni sono piccoli ma importanti! Camminano in avanti una casella alla volta. Se arrivano dall'altra parte, possono diventare una Regina!</p>
+                </div>
+
+                <div class="exercise-box">
+                    <h4>🎮 Esercizio 1:</h4>
+                    <ol>
+                        <li>Prendi una scacchiera e controlla che l'angolo in basso a destra sia chiaro</li>
+                        <li>Conta tutte le caselle: sono 64?</li>
+                        <li>Prova a nominare tutti i pezzi guardandoli</li>
+                        <li>Quanti pedoni ha ogni giocatore?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="lesson2" class="lesson">
+                <div class="lesson-header">
+                    <h2>Lezione 2: Come Si Muovono i Pezzi</h2>
+                    <p>Impariamo a muovere ogni pezzo sulla scacchiera!</p>
+                </div>
+
+                <h3>👑 Il Re</h3>
+                <p>Il Re può muoversi di una sola casella alla volta, ma può andare in tutte le direzioni: avanti, indietro, ai lati e in diagonale.</p>
+                <div class="tip-box">
+                    <strong>⚠️ Regola d'oro:</strong> Il Re non può mai muoversi in una casella dove verrebbe catturato! Deve sempre stare al sicuro.
+                </div>
+
+                <h3>👸 La Regina</h3>
+                <p>La Regina è una superstar! Può muoversi in tutte le direzioni (avanti, indietro, ai lati e in diagonale) e può andare quante caselle vuole in una sola mossa.</p>
+
+                <h3>🏰 La Torre</h3>
+                <p>La Torre si muove solo in linea retta: avanti, indietro, a destra o a sinistra. Può andare quante caselle vuole, ma non può saltare sopra altri pezzi.</p>
+
+                <h3>🎓 L'Alfiere</h3>
+                <p>L'Alfiere si muove solo in diagonale. Può andare quante caselle vuole in diagonale, ma un Alfiere che parte da una casella chiara rimarrà sempre su caselle chiare (e lo stesso vale per quello su caselle scure).</p>
+
+                <h3>🐴 Il Cavallo</h3>
+                <p>Il Cavallo è speciale! Si muove a forma di "L": 2 caselle in una direzione e poi 1 casella di lato. È l'unico pezzo che può saltare sopra gli altri!</p>
+                <div class="tip-box">
+                    <strong>💡 Ricorda:</strong> Pensa al movimento del Cavallo come 2+1 o 1+2. Due caselle avanti e una di lato, oppure una avanti e due di lato!
+                </div>
+
+                <h3>⚔️ Il Pedone</h3>
+                <p>Il Pedone ha regole speciali:</p>
+                <ul>
+                    <li>Si muove sempre in avanti di una casella</li>
+                    <li>Alla sua prima mossa può avanzare di 1 o 2 caselle</li>
+                    <li>Cattura solo in diagonale (una casella in avanti-destra o avanti-sinistra)</li>
+                    <li>Non può mai andare indietro!</li>
+                </ul>
+
+                <div class="exercise-box">
+                    <h4>🎮 Esercizio 2:</h4>
+                    <ol>
+                        <li>Metti una Regina al centro della scacchiera: in quante caselle può andare?</li>
+                        <li>Prova a muovere un Cavallo: riesci a fare la "L"?</li>
+                        <li>Metti un Pedone e prova a farlo avanzare</li>
+                        <li>Il Re può muoversi in diagonale? Prova!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="lesson3" class="lesson">
+                <div class="lesson-header">
+                    <h2>Lezione 3: Regole Speciali e Inizio Partita</h2>
+                    <p>Scopriamo le mosse speciali e come iniziare a giocare!</p>
+                </div>
+
+                <h3>🎯 Come Iniziare la Partita</h3>
+                <p>All'inizio della partita, i pezzi si mettono sempre nello stesso modo:</p>
+                <ul>
+                    <li>Le Torri vanno negli angoli</li>
+                    <li>I Cavalli vanno vicino alle Torri</li>
+                    <li>Gli Alfieri vanno vicino ai Cavalli</li>
+                    <li>La Regina va sulla casella del suo colore (Regina bianca su casella chiara)</li>
+                    <li>Il Re va nella casella rimanente</li>
+                    <li>Tutti i Pedoni vanno davanti, sulla seconda fila</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>💡 Regola facile:</strong> "La Regina ama il suo colore!" La Regina bianca sta su una casella chiara, la Regina nera su una scura.
+                </div>
+
+                <h3>🏰 L'Arrocco (Mossa Speciale!)</h3>
+                <p>L'Arrocco è una mossa super speciale dove muovi il Re E la Torre insieme! È l'unica volta che puoi muovere due pezzi in una mossa.</p>
+                <p><strong>Come si fa:</strong></p>
+                <ol>
+                    <li>Il Re si muove di 2 caselle verso una Torre</li>
+                    <li>La Torre salta dall'altra parte del Re</li>
+                </ol>
+                <p><strong>Quando puoi fare l'Arrocco:</strong></p>
+                <ul>
+                    <li>Né il Re né la Torre si sono mai mossi prima</li>
+                    <li>Non ci sono pezzi tra il Re e la Torre</li>
+                    <li>Il Re non è sotto scacco</li>
+                    <li>Il Re non passa attraverso una casella sotto attacco</li>
+                </ul>
+
+                <h3>👻 La Presa en Passant</h3>
+                <p>Questa è una mossa speciale solo per i Pedoni! Se un Pedone avversario avanza di 2 caselle e finisce accanto al tuo Pedone, puoi catturarlo come se si fosse mosso di una sola casella. Ma attenzione: puoi farlo solo subito dopo, nella mossa successiva!</p>
+
+                <h3>👑 La Promozione del Pedone</h3>
+                <p>Quando un Pedone arriva dall'altra parte della scacchiera (all'ultima riga), può trasformarsi in un pezzo più forte! Di solito diventa una Regina, perché è il pezzo più potente.</p>
+
+                <h3>⚔️ Catturare i Pezzi</h3>
+                <p>Per catturare un pezzo nemico, muovi il tuo pezzo nella casella occupata dal pezzo avversario. Il pezzo nemico viene tolto dalla scacchiera e il tuo pezzo prende il suo posto!</p>
+
+                <div class="exercise-box">
+                    <h4>🎮 Esercizio 3:</h4>
+                    <ol>
+                        <li>Posiziona tutti i pezzi come all'inizio di una partita</li>
+                        <li>Controlla che la Regina sia sul colore giusto</li>
+                        <li>Prova a fare l'Arrocco (ricorda: 2 caselle per il Re!)</li>
+                        <li>Fai avanzare un Pedone fino all'ultima riga: in cosa si trasforma?</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="lesson4" class="lesson">
+                <div class="lesson-header">
+                    <h2>Lezione 4: Strategie e Tattiche di Base</h2>
+                    <p>Impariamo a giocare in modo intelligente!</p>
+                </div>
+
+                <h3>🎯 Principi di Apertura</h3>
+                <p>Come iniziare bene la partita:</p>
+                <ul>
+                    <li><strong>Controlla il centro:</strong> Le caselle al centro della scacchiera sono le più importanti. Cerca di mettere i tuoi Pedoni e pezzi al centro!</li>
+                    <li><strong>Sviluppa i pezzi:</strong> Porta fuori Cavalli e Alfieri nelle prime mosse. Non muovere lo stesso pezzo tante volte all'inizio.</li>
+                    <li><strong>Proteggi il Re:</strong> Fai l'Arrocco presto per mettere il Re al sicuro.</li>
+                    <li><strong>Non muovere troppo la Regina all'inizio:</strong> La Regina è preziosa, tienila al sicuro nelle prime mosse.</li>
+                </ul>
+
+                <h3>⚔️ Tattiche Importanti</h3>
+                
+                <div class="piece-card">
+                    <h4>🎯 L'Inchiodatura</h4>
+                    <p>È quando un pezzo non può muoversi perché dietro c'è un pezzo più importante. Esempio: un Cavallo non si può muovere se dietro c'è il Re, altrimenti il Re sarebbe sotto scacco!</p>
+                </div>
+
+                <div class="piece-card">
+                    <h4>🍴 La Forchetta</h4>
+                    <p>È quando un pezzo (spesso un Cavallo) attacca due pezzi nemici contemporaneamente! L'avversario può salvarne solo uno.</p>
+                </div>
+
+                <div class="piece-card">
+                    <h4>⚡ Lo Scacco Doppio</h4>
+                    <p>È quando due pezzi danno scacco al Re contemporaneamente! È molto potente perché l'avversario deve muovere il Re (non può bloccare o catturare).</p>
+                </div>
+
+                <div class="piece-card">
+                    <h4>🎪 L'Attacco di Scoperta</h4>
+                    <p>Muovi un pezzo e scopri l'attacco di un pezzo dietro! È come una sorpresa per l'avversario.</p>
+                </div>
+
+                <h3>🛡️ Difesa</h3>
+                <p>Giocare bene in difesa è importante quanto attaccare:</p>
+                <ul>
+                    <li>Proteggi sempre i tuoi pezzi importanti</li>
+                    <li>Se un pezzo è attaccato, puoi: muoverlo, difenderlo con un altro pezzo, o contrattaccare!</li>
+                    <li>Non lasciare pezzi senza protezione</li>
+                    <li>Guarda sempre le mosse dell'avversario prima di rispondere</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>💡 Consiglio d'Oro:</strong> Prima di ogni mossa, chiediti: "Il mio Re è al sicuro? I miei pezzi sono protetti? Cosa vuole fare l'avversario?"
+                </div>
+
+                <div class="exercise-box">
+                    <h4>🎮 Esercizio 4:</h4>
+                    <ol>
+                        <li>Gioca una partita e prova a controllare le 4 caselle centrali</li>
+                        <li>Fai uscire tutti i Cavalli e gli Alfieri entro le prime 5 mosse</li>
+                        <li>Fai l'Arrocco per proteggere il Re</li>
+                        <li>Cerca di fare una forchetta con un Cavallo!</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="lesson5" class="lesson">
+                <div class="lesson-header">
+                    <h2>Lezione 5: Scacco Matto e Vittoria!</h2>
+                    <p>Impariamo come vincere la partita!</p>
+                </div>
+
+                <h3>👑 Cos'è lo Scacco Matto?</h3>
+                <p>Lo scacco matto è quando il Re è sotto attacco (scacco) e non può scappare! Questa è la vittoria agli scacchi.</p>
+                <p><strong>Per dare scacco matto, il Re deve:</strong></p>
+                <ul>
+                    <li>Essere sotto scacco (attaccato)</li>
+                    <li>Non poter muoversi in nessuna casella sicura</li>
+                    <li>Non poter essere difeso da un altro pezzo</li>
+                    <li>L'attaccante non può essere catturato o bloccato</li>
+                </ul>
+
+                <h3>⚠️ Scacco vs Scacco Matto</h3>
+                <div class="piece-card">
+                    <h4>Scacco</h4>
+                    <p>Il Re è attaccato ma può scappare o essere difeso. Il giocatore DEVE salvare il Re nella prossima mossa!</p>
+                </div>
+
+                <div class="piece-card">
+                    <h4>Scacco Matto</h4>
+                    <p>Il Re è attaccato e NON può scappare in nessun modo. La partita è finita!</p>
+                </div>
+
+                <h3>🏆 Scacchi Matti Famosi per Principianti</h3>
+                
+                <div class="piece-card">
+                    <h4>📚 Matto del Barbiere (o Matto dello Sciocco)</h4>
+                    <p>È lo scacco matto più veloce! Succede in sole 2 mosse quando un giocatore fa errori gravi all'inizio:</p>
+                    <ol>
+                        <li>Il Bianco muove il Pedone davanti al Re di 2 caselle</li>
+                        <li>Il Nero muove un Pedone</li>
+                        <li>Il Bianco muove il Pedone dell'Alfiere di 2 caselle</li>
+                        <li>Il Nero dà scacco matto con la Regina!</li>
+                    </ol>
+                    <p><strong>Lezione importante:</strong> Non aprire troppe caselle vicino al tuo Re all'inizio!</p>
+                </div>
+
+                <div class="piece-card">
+                    <h4>🎯 Matto con Regina e Re</h4>
+                    <p>Quando hai solo la Regina e il Re contro il Re avversario:</p>
+                    <ol>
+                        <li>Usa la Regina per spingere il Re nemico verso il bordo</li>
+                        <li>Il tuo Re deve aiutare!</li>
+                        <li>Quando il Re nemico è sul bordo, dai scacco matto con la Regina</li>
+                    </ol>
+                </div>
+
+                <h3>🎮 Modi per Vincere</h3>
+                <ul>
+                    <li><strong>Scacco Matto:</strong> Il modo principale per vincere!</li>
+                    <li><strong>L'avversario si arrende:</strong> Se vede che perderà di sicuro</li>
+                    <li><strong>Tempo scaduto:</strong> Se si gioca con l'orologio e il tempo finisce</li>
+                </ul>
+
+                <h3>🤝 La Patta (Pareggio)</h3>
+                <p>A volte la partita finisce in pareggio:</p>
+                <ul>
+                    <li><strong>Stallo:</strong> Un giocatore non può fare mosse legali ma il suo Re non è sotto scacco</li>
+                    <li><strong>Accordo:</strong> Entrambi i giocatori decidono di pareggiare</li>
+                    <li><strong>Materiale insufficiente:</strong> Non ci sono abbastanza pezzi per dare scacco matto</li>
+                    <li><strong>Ripetizione:</strong> La stessa posizione si ripete 3 volte</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>⚠️ Attenzione allo Stallo!</strong> Se stai vincendo con tanti pezzi in più, fai attenzione a non bloccare l'avversario senza dargli scacco. Questo sarebbe uno stallo (patta) e perderesti la vittoria!
+                </div>
+
+                <h3>🌟 Consigli per Migliorare</h3>
+                <ul>
+                    <li>Gioca tante partite! La pratica è fondamentale</li>
+                    <li>Analizza le tue partite: cosa hai fatto bene? Cosa puoi migliorare?</li>
+                    <li>Risolvi problemi di scacchi (puzzle)</li>
+                    <li>Impara dalle tue sconfitte: sono le migliori lezioni!</li>
+                    <li>Gioca con giocatori più forti di te per imparare</li>
+                    <li>Divertiti! Gli scacchi sono un gioco bellissimo</li>
+                </ul>
+
+                <div class="exercise-box">
+                    <h4>🎮 Esercizio Finale:</h4>
+                    <ol>
+                        <li>Gioca una partita completa dall'inizio alla fine</li>
+                        <li>Prova a dare scacco matto con Regina e Re</li>
+                        <li>Cerca di vedere 2 mosse avanti: la tua e quella dell'avversario</li>
+                        <li>Divertiti e continua ad imparare! 🎉</li>
+                    </ol>
+                </div>
+
+                <div class="tip-box">
+                    <strong>🏆 Congratulazioni!</strong> Hai completato il corso base di scacchi! Ora sei pronto per giocare e migliorare. Ricorda: ogni grande campione è stato prima un principiante. Continua a giocare e a imparare!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showLesson(lessonId) {
+            // Nascondi tutte le lezioni
+            const lessons = document.querySelectorAll('.lesson');
+            lessons.forEach(lesson => {
+                lesson.classList.remove('active');
+            });
+            
+            // Mostra la lezione selezionata
+            const selectedLesson = document.getElementById(lessonId);
+            if (selectedLesson) {
+                selectedLesson.classList.add('active');
+                // Scroll verso l'alto quando cambi lezione
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
